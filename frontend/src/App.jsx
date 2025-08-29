@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Editor from "@monaco-editor/react";
 import axios from "axios";
-
+const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 export default function App() {
   const [code, setCode] = useState("// Write your code here...");
   const [explanation, setExplanation] = useState("");
@@ -20,7 +20,7 @@ export default function App() {
 
   const fetchHistory = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/history");
+      const res = await axios.get(`${API_BASE_URL}/api/history`);
       setHistory(res.data);
     } catch (err) {
       console.error("Error fetching history:", err);
@@ -33,7 +33,7 @@ export default function App() {
     setExplanation("");
 
     try {
-      const res = await axios.post("http://localhost:5000/api/run", {
+      const res = await axios.post(`${API_BASE_URL}/api/run`, {
         code,
         language,
         mode,
